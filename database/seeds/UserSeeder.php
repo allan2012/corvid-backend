@@ -23,8 +23,8 @@ class UserSeeder extends Seeder
                 'names' => $faker->name,
                 'email' => $faker->email,
                 'password' => Hash::make('password'),
-                'role_id' => rand(0,1),
-                'status' => $status_array[rand(0,1)]
+                'role_id' => rand(0, 1),
+                'status' => $status_array[rand(0, 1)]
             ]);
         }
 

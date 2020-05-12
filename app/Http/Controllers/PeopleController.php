@@ -8,9 +8,20 @@ use Illuminate\Support\Facades\Log;
 
 class PeopleController extends Controller
 {
-    public function fetchAllCorvidPatients()
+    public function fetchAllCorvidPatients(Request $request)
     {
-        return People::where('confirmed_corvid', true)->paginate(15);
+        $people =  People::where('confirmed_corvid', true);
+
+        if (isset($request->health_state) && $request->health_state != '') {
+            $people->where('current_corvid_state', $request->health_state);
+        }
+        if (isset($request->sex) && $request->sex != '') {
+            $people->where('sex', $request->sex);
+        }
+        if (isset($request->q) && $request->q != '') {
+            $people->where('national_id', 'like', "%{$request->q}%");
+        }
+        return $people->paginate(15);
     }
 
     public function fetchAllQuarantinedPatients()
